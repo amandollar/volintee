@@ -11,6 +11,7 @@ import { validateObjectId, validatePagination, sanitizeString } from '../middlew
  * @route   GET /api/admin/dashboard
  * @access  Private/Admin
  */
+
 export const getDashboardStats = asyncHandler(async (req, res, next) => {
   const [
     totalUsers,

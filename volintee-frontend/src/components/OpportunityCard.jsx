@@ -8,7 +8,7 @@ const OpportunityCard = ({ opportunity }) => {
     organization,
     location,
     category,
-    image,
+    images,
     createdAt
   } = opportunity;
 
@@ -19,12 +19,15 @@ const OpportunityCard = ({ opportunity }) => {
     year: 'numeric'
   });
 
+  // Use first image if available
+  const primaryImage = images && images.length > 0 ? images[0] : 'https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
+
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col h-full group">
       {/* Image Container */}
       <div className="relative h-48 overflow-hidden">
         <img 
-          src={image || 'https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'} 
+          src={primaryImage} 
           alt={title} 
           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
         />

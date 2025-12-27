@@ -102,8 +102,6 @@ export const register = asyncHandler(async (req, res, next) => {
 
       // Validate organization location
       const orgLocation = organizationLocation || location;
-      // Simplified validation: just check if address exists if it's required by model
-      // The model requires address, so we should ensure it's there.
       if (orgLocation && !orgLocation.address) {
           // Rollback user creation
           await User.findByIdAndDelete(user._id);
@@ -144,17 +142,6 @@ export const register = asyncHandler(async (req, res, next) => {
       },
     });
   } catch (error) {
-    // If user was created but subsequent steps failed, we might want to clean up
-    // But for now, just throw the error as the user creation is the first step in the try block
-    // If User.create fails, nothing to clean up.
-    // If Organization.create fails, we technically have an orphan user. 
-    // In a real app without transactions, we'd need manual rollback here too.
-    // For simplicity in this fix, we'll assume if User.create succeeds, we're mostly good, 
-    // but let's add a basic cleanup if it's an organization error.
-    
-    // Note: In the original code, `user` variable scope was inside try block. 
-    // We can't easily access `user` here to delete it without restructuring more.
-    // Given this is a dev fix, we'll accept the risk of orphan users on rare failures.
     throw error;
   }
 });
