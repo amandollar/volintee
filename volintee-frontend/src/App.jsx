@@ -13,6 +13,7 @@ import CreateOpportunityPage from './pages/CreateOpportunityPage';
 import ProfilePage from './pages/ProfilePage';
 import DashboardPage from './pages/DashboardPage';
 import ManageApplicationsPage from './pages/ManageApplicationsPage';
+import EditOpportunityPage from './pages/EditOpportunityPage';
 
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -49,6 +50,11 @@ function App() {
           <Route path="/opportunities/:id/manage" element={
             <ProtectedRoute>
               <ManageApplicationsPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/opportunities/:id/edit" element={
+            <ProtectedRoute>
+              <EditOpportunityPage />
             </ProtectedRoute>
           } />
           <Route path="/login" element={<LoginPage />} />

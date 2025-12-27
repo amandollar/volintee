@@ -141,6 +141,12 @@ const DashboardPage = () => {
                         View Details
                       </Link>
                       <Link 
+                        to={`/opportunities/${opp._id}/edit`}
+                        className="flex-1 text-center py-2 rounded-lg bg-yellow-50 text-yellow-700 hover:bg-yellow-100 transition-colors font-medium text-sm"
+                      >
+                        Edit
+                      </Link>
+                      <Link 
                         to={`/opportunities/${opp._id}/manage`}
                         className="flex-1 text-center py-2 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors font-medium text-sm"
                       >

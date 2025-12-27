@@ -35,6 +35,18 @@ export const createOpportunity = async (data) => {
   return response.data;
 };
 
+export const updateOpportunity = async (id, data) => {
+  try {
+    const config = data instanceof FormData 
+      ? { headers: { 'Content-Type': 'multipart/form-data' } }
+      : {};
+    const response = await api.put(`/opportunities/${id}`, data, config);
+    return { success: true, data: response.data.data };
+  } catch (error) {
+    return { success: false, error: error.response?.data?.message || 'Failed to update opportunity' };
+  }
+};
+
 // Application APIs
 export const createApplication = async (data) => {
   try {
