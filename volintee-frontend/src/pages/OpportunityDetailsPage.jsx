@@ -98,6 +98,31 @@ const OpportunityDetailsPage = () => {
     images,
   } = opportunity;
 
+  // Format location strings (short for header, full for sidebar)
+  const locationShort = (() => {
+    if (!location) return 'Remote';
+    const city = location.city ? location.city.trim() : '';
+    const state = location.state ? location.state.trim() : '';
+    const parts = [];
+    if (city) parts.push(city);
+    if (state) parts.push(state);
+    return parts.length > 0 ? parts.join(', ') : 'Remote';
+  })();
+
+  const locationFull = (() => {
+    if (!location) return 'Remote';
+    const address = location.address ? location.address.trim() : '';
+    const city = location.city ? location.city.trim() : '';
+    const state = location.state ? location.state.trim() : '';
+    const zip = location.zipCode ? location.zipCode.trim() : '';
+    const cityState = [city, state].filter(Boolean).join(', ');
+    const parts = [];
+    if (address) parts.push(address);
+    if (cityState) parts.push(cityState + (zip ? ` ${zip}` : ''));
+    if (parts.length > 0) return parts.join(', ');
+    return 'Remote';
+  })();
+
   const formatDate = (dateString) => {
     if (!dateString) return 'Flexible';
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -149,18 +174,6 @@ const OpportunityDetailsPage = () => {
                 <div>
                     <p className="text-xs text-emerald-300 uppercase tracking-wider font-semibold mb-0.5">Organization</p>
                     <p className="font-medium text-lg text-white">{organization?.organizationName || 'Unknown Organization'}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white backdrop-blur-sm border border-white/10">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                    <p className="text-xs text-emerald-300 uppercase tracking-wider font-semibold mb-0.5">Location</p>
-                    <p className="font-medium text-lg text-white">{location?.city}, {location?.state}</p>
                 </div>
               </div>
             </div>
@@ -313,7 +326,7 @@ const OpportunityDetailsPage = () => {
                   <div>
                     <p className="text-xs text-gray-400 uppercase tracking-wider font-bold mb-1">Location</p>
                     <p className="font-semibold text-gray-900 text-lg">{location?.address}</p>
-                    <p className="text-sm text-gray-500 mt-0.5">{location?.city}, {location?.state} {location?.zipCode}</p>
+                    <p className="text-sm text-gray-500 mt-0.5">{locationFull}</p>
                   </div>
                 </div>
               </div>

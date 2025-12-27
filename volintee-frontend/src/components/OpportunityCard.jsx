@@ -22,6 +22,19 @@ const OpportunityCard = ({ opportunity }) => {
   // Use first image if available
   const primaryImage = images && images.length > 0 ? images[0] : 'https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
 
+  // Format location text nicely (avoid stray commas)
+  const locationText = (() => {
+    if (!location) return 'Remote';
+    const city = location.city ? location.city.trim() : '';
+    const state = location.state ? location.state.trim() : '';
+    const parts = [];
+    if (city) parts.push(city);
+    if (state) parts.push(state);
+    if (parts.length > 0) return parts.join(', ');
+    if (location.address) return location.address;
+    return 'Remote';
+  })();
+
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col h-full group">
       {/* Image Container */}
@@ -59,7 +72,7 @@ const OpportunityCard = ({ opportunity }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            {location?.city || 'Remote'}, {location?.state || ''}
+            {locationText}
           </div>
           <div className="flex items-center gap-1.5">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
